@@ -6,4 +6,5 @@ Arquivos:
   - README.md
   - simulacao.R
   - dados.csv
+  - análise.R
 
