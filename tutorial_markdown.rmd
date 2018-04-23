@@ -1,0 +1,98 @@
+---
+title: "tutorial_8"
+author: "Jessica Voigt"
+date: "23 de abril de 2018"
+output: html_document
+---
+# Aula mark-down
+
+Tutorial da aula http://htmlpreview.github.io/?https://github.com/leobarone/FLS6397_2018/blob/master/tutorials/tutorial08.html
+
+Para inserir um chunk, clique: Insert -> R (ou toque Ctrl+Alt+I). Aparece uma caixa cinza onde podemos colocar o nosso código:]]
+
+```{r}
+x <- 1+1
+```
+
+Chunks serão executados na ordem que aparece no documento (como um script normal)
+
+##Exercício
+
+Começando com um novo projeto e um novo arquivo markdown, crie um PDF (ou HTML se não tem Latex) que inclui apenas texto (sem chunks de código) com ao menos cinco das formatações acima e a famosa equação de Einstein.
+
+
+### Formatações que eu preciso fazer:
+* Títulos
+     * Um título     _ok_ <br>
+     * Um subtítulo     _ok_ <br>
+     * Um título 3     _ok_ <br>
+* Bullets     _ok_ <br>
+* Itálico     _ok_ <br>
+* Famosa equação de Einstein:
+
+$$e = mc^2$$
+
+## Exercício 2
+
+O volume de uma esfera é A=4/3πr3. Use um chunk para calcular a área de uma esfera de raio 7 e relate o resultado numérico dentro (‘in-line’) de uma frase explicativa. Crie um documento PDF (ou HTML se não tem Latex).
+
+```{r}
+area_esfera <- round((4/3)*(pi*(7^3)),2)
+```
+
+A equação que define a área de uma esfera é:
+
+$$A = \frac{4}{3} \pi r^3$$
+
+E o resultado para r = 7 é `r area_esfera`
+
+
+### Tabelas
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(knitr)
+
+file1 <- "https://raw.githubusercontent.com/leobarone/ifch_intro_r/master/data/bf_amostra_hv.csv"
+dados <- read.table(file1, header = T, sep = ",")
+
+dados %>% group_by(uf) %>%
+  summarize(mean_valor=mean(valor)) %>% 
+  kable(caption="A minha tabela",align="cr",digits=1, col.names = c("Unidade Federativa","Média"))
+```
+
+### Gráficos
+
+```{r}
+dados %>% group_by(uf) %>%
+  summarize(valor_total=sum(valor)) %>%
+  ggplot() +
+  geom_col(aes(x=uf,y=valor_total))
+```
+
+### Exercício 3
+
+Usando o link acima para os dados de Bolsa família, criar uma tabela dos cinco maiores valores recebidos, formate-lo com um título, nomes de colunas e o número apropriado de dígitos, e ‘knit’ para um PDF (ou HTML se não tem Latex).
+
+```{r}
+dados %>%
+  group_by(uf) %>% 
+  summarise(valor_medio = round(mean(valor),2)) %>%
+  arrange(desc(valor_medio)) %>% 
+  slice(1:5) %>%
+  kable(caption = "Tabela do exercício 3", col.names = c("Unidade Federativa", "Valor médio recebido"), align="cr")
+```
+
+### Checkpoint
+
+Para tornar os documentos reprodutíveis, vamos usar o pacote checkpoint. Num site online, o checkpoint salva cada dia todos os pacotes disponível em R (de CRAN). Nós só precisamos escolher uma data para o nosso código para que ele use o conjunto consistente de pacotes salvos nessa data sempre que o código seja executado. Como aproveitamos? Apenas coloque o seguinte código (com sua data preferida) no início do seu código:
+
+```{r, eval=F}
+install.packages("checkpoint")
+library(checkpoint)
+checkpoint("2018-04-19")
+```
+
+### Exercício 4
+
+Vamos limpar e organizar o script com quem você está trabalhando para criar um documento PDF (ou HTML se não tem Latex instalado) profissional. Especifique parâmetros de cada chunk para tirar todos os mensagens, warnings e código bruto do documento final. O seu PDF deve conter apenas o seu texto explicativo, ‘in-line’ código, e tabelas/gráficos.
