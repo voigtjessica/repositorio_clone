@@ -16,7 +16,7 @@ x <- 1+1
 
 Chunks serão executados na ordem que aparece no documento (como um script normal)
 
-##Exercício
+## Exercício
 
 Começando com um novo projeto e um novo arquivo markdown, crie um PDF (ou HTML se não tem Latex) que inclui apenas texto (sem chunks de código) com ao menos cinco das formatações acima e a famosa equação de Einstein.
 
@@ -30,7 +30,7 @@ Começando com um novo projeto e um novo arquivo markdown, crie um PDF (ou HTML 
 * Itálico     _ok_ <br>
 * Famosa equação de Einstein:
 
-$$e = mc^2$$
+$$ e = mc^ 2$$
 
 ## Exercício 2
 
@@ -42,7 +42,7 @@ area_esfera <- round((4/3)*(pi*(7^3)),2)
 
 A equação que define a área de uma esfera é:
 
-$$A = \frac{4}{3} \pi r^3$$
+$$ A = \frac{4}{3} \pi r^3 $$
 
 E o resultado para r = 7 é `r area_esfera`
 
